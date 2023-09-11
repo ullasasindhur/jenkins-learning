@@ -1,0 +1,39 @@
+pipeline{
+    agent any
+    stages {
+        stage('one) {
+            steps{
+                echo 'Hi, this is the first step.'
+            }
+        }
+        stage('two') {
+            steps {
+                input('Do you want to go to step-3?')
+            }
+        }
+        stage('three') {
+            when {
+                not {
+                    branch "master"
+                }
+            }
+            steps{
+                echo "This is step 3 on non master branch."
+            }
+        }
+        stage('four'){
+            parallel{
+                stage('parallel-1'){
+                    steps{
+                        echo "Running parallel-1."
+                    }
+                }
+                stage("parallel-2"){
+                    steps{
+                        echo "Running parallel-2."
+                    }
+                }
+            }
+        }
+    }
+}
