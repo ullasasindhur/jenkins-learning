@@ -4,7 +4,7 @@ node{
         print "Hello, from scripted pipeline"
         if (i==0)   
         {
-            git "https://github.com/ullasasindhur/jenkins-learning.git"
+            git branch: 'main', url: 'https://github.com/ullasasindhur/jenkins-learning.git'
             echo "Running stage 0"
         }
         else {
