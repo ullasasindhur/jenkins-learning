@@ -1,0 +1,15 @@
+node{
+    for(int i=0;i<2;i++){
+        stage "Stage "+i
+        print "Hello, from scripted pipeline"
+        if (i==0)   
+        {
+            git "https://github.com/ullasasindhur/jenkins-learning.git"
+            echo "Running stage 0"
+        }
+        else {
+            build 'hello pipeline'
+            echo "Runing on stage 1"
+        }
+    }
+}
