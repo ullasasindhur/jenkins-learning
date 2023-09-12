@@ -9,7 +9,7 @@ pipeline{
         stage('two'){
             steps{
                 echo 'listing the current directory contents'
-                ls -alh
+                sh 'ls -alh'
             }
         }
     }
