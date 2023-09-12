@@ -6,5 +6,11 @@ pipeline{
                 echo 'Hello, Pipeline is triggered.'
             }
         }
+        stage('two'){
+            steps{
+                echo 'listing the current directory contents'
+                ls -alh
+            }
+        }
     }
 }
