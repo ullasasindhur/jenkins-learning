@@ -6,11 +6,9 @@ pipeline {
         sh 'ls -alh'
       }
     }
-    stage('Deploy to Kubernetes') {
+    stage('Get information about kubernetes') {
       steps {
-        kubernetesDeploy(
-          configs: 'kubernetes/deployment.yaml'
-        )
+        sh 'kubectl get all -A'
       }
     }
   }
