@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    kubernetes{
+        
+    }
+  }
   stages {
     stage('Listing out the files') {
       steps {
