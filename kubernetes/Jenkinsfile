@@ -1,0 +1,21 @@
+pipeline {
+  agent {
+    kubernetes {
+      label 'my-kubernetes-agent'
+    }
+  }
+  stages {
+    stage('Listing out the files') {
+      steps {
+        sh 'ls -alh'
+      }
+    }
+    stage('Deploy to Kubernetes') {
+      steps {
+        kubernetesDeploy(
+          configs: 'kubernetes/deployment.yaml'
+        )
+      }
+    }
+  }
+}
