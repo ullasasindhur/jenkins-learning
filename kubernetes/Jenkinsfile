@@ -2,7 +2,6 @@ pipeline {
   agent {
     kubernetes {
         cloud 'kubernetes'
-        label 'kubernetes-agent'
     }
   }
   stages {
@@ -14,8 +13,7 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps {
         kubernetesDeploy(
-          configs: 'kubernetes/deployment.yaml',
-          kubeconfigId: 'my-kubeconfig'
+          configs: 'kubernetes/deployment.yaml'
         )
       }
     }
