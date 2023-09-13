@@ -6,12 +6,12 @@ pipeline {
         sh 'ls -alh'
       }
     }
-    // stage('Deploy to Kubernetes') {
-    //   steps {
-    //     kubernetesDeploy(
-    //       configs: 'kubernetes/deployment.yaml'
-    //     )
-    //   }
-    // }
+    stage('Deploy to Kubernetes') {
+      steps {
+        kubernetesDeploy(
+          configs: 'kubernetes/deployment.yaml'
+        )
+      }
+    }
   }
 }
