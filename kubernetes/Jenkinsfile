@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    kubernetes {
-        cloud 'kubernetes'
-    }
-  }
+  agent any
   stages {
     stage('Listing out the files') {
       steps {
