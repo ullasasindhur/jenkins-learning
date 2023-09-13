@@ -13,10 +13,9 @@ pipeline {
     }
     stage('Deploying Nginx to Kubernetes') {
       steps {
-        script {
-          kubernetesDeploy(configs: "kubernetes/deployment.yaml")
-        }
-      }
+        kubernetesDeploy(
+          configs: 'kubernetes/deployment.yaml'
+        )
     }
   }
 }
