@@ -6,9 +6,16 @@ pipeline {
         sh 'ls -alh'
       }
     }
-    stage('Get information about kubernetes') {
+    stage('Get information about system') {
       steps {
-        sh 'kubectl get all -A'
+        sh 'cat /etc/os-release'
+      }
+    }
+    stage('Deploying Nginx to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "kubernetes/deployment.yaml")
+        }
       }
     }
   }
