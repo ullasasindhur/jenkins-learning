@@ -19,7 +19,7 @@ pipeline {
       steps {
         container('kubectl') {
           withCredentials([file(credentialsId: 'Kubernetes-Config', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" kubernetes/deplyoment.yaml'
+            sh 'ls -alh'
             sh 'kubectl apply -f kubernetes/deplyoment.yaml'
           }
         }
