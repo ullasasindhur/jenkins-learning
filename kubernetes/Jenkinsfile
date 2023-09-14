@@ -24,6 +24,7 @@ pipeline {
             sh 'kubectl get all -A'
             sh 'cd kubernetes && ls'
             sh 'cat ./kubernetes/deployment.yaml'
+            sh 'kubectl apply -f ./kubernetes/deployment.yaml'
           }
         }
       }
