@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    kubernetes{
-        
-    }
-  }
+  agent any
   stages {
     stage('Listing out the files') {
       steps {
@@ -13,12 +9,13 @@ pipeline {
     stage('Get information about system') {
       steps {
         sh 'cat /etc/os-release'
+        sh 'docker version'
       }
     }
     stage('Deploying Nginx to Kubernetes') {
       steps {
         kubernetesDeploy(
-          configs: 'kubernetes/deployment.yaml'
+          configs: 'kubernetes/deployment.yaml', kubeconfigId: "Kubernetes-Config"
         )
     }
   }
