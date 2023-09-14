@@ -20,7 +20,10 @@ pipeline {
         container('kubectl') {
           withCredentials([file(credentialsId: 'Kubernetes-Config', variable: 'KUBECONFIG')]) {
             sh 'ls -alh'
-            sh 'kubectl apply -f ./kubernetes/deplyoment.yaml'
+            sh 'kubectl version'
+            sh 'kubectl get all -A'
+            sh 'cd kubernetes && ls'
+            sh 'cat ./kubernetes/deployment.yaml'
           }
         }
       }
