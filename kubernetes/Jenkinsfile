@@ -1,22 +1,41 @@
 pipeline {
-  agent any
-  stages {
-    stage('Listing out the files') {
-      steps {
-        sh 'ls -alh'
-      }
-    }
-    stage('Get information about system') {
-      steps {
-        sh 'cat /etc/os-release'
-      }
-    }
-    stage('Deploying Nginx to Kubernetes') {
-      steps {
-        kubernetesDeploy(
-          configs: 'kubernetes/deployment.yaml', kubeconfigId: "Kubernetes-Config"
-        )
+
+  options {
+    ansiColor('xterm')
+  }
+
+  agent {
+    kubernetes {
+      yamlFile 'kubernetes/kaniko-builder.yaml'
     }
   }
-}
+
+  stages {
+
+    stage('Kaniko Build & Push Image') {
+      steps {
+        container('kaniko') {
+          script {
+            sh '''
+            /kaniko/executor --dockerfile `pwd`/Kubernetes/Dockerfile \
+                             --context `pwd` \
+                             --destination=ullasasindhur/jen-k8s:${BUILD_NUMBER}
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Deploy App to Kubernetes') {     
+      steps {
+        container('kubectl') {
+          withCredentials([file(credentialsId: 'Kubernetes-Config', variable: 'KUBECONFIG')]) {
+            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" kubernetes/deplyoment.yaml'
+            sh 'kubectl apply -f kubernetes/deplyoment.yaml'
+          }
+        }
+      }
+    }
+  
+  }
 }
