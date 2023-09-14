@@ -1,37 +1,21 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nginx-deployment
   labels:
-    app: jen-k8s
-  name: jen-k8s
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: jen-k8s
+      app: nginx
   template:
     metadata:
       labels:
-        app: jen-k8s
+        app: nginx
     spec:
       containers:
-      - image: ullasasindhur/jen-k8s:<TAG>
-        imagePullPolicy: Always
-        name: jen-k8s
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: jen-k8s
-  name: jen-k8s
-spec:
-  ports:
-  - nodePort: 32223
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: jen-k8s
-  type: NodePort
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
